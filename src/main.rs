@@ -289,7 +289,19 @@ fn extract_single_request_info(
         _ => return Err((Some(id), DefinedError::MethodNotFound)),
     };
 
+    // ──────── BLOCK HERE TO FORBID miner_*, admin_*, engine_*, personal_* ────────
+    if method.starts_with("miner_")
+        || method.starts_with("admin_")
+        || method.starts_with("engine_")
+        || method.starts_with("personal_")
+    {
+        // immediately return a “method not found” (or swap in your own error)
+        return Err((Some(id), DefinedError::MethodNotFound));
+    }
+    // ─────────────────────────────────────────────────────────────────
+    
     let params = raw_request["params"].take();
+
 
     Ok((id, method, params))
 }
