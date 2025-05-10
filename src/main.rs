@@ -294,6 +294,8 @@ fn extract_single_request_info(
         || method.starts_with("admin_")
         || method.starts_with("engine_")
         || method.starts_with("personal_")
+        || method.starts_with("debug_")
+        || method.starts_with("trace_")
     {
         // immediately return a “method not found” (or swap in your own error)
         return Err((Some(id), DefinedError::MethodNotFound));
